@@ -1,5 +1,7 @@
 package de.herrbockwurst.heroleague.InternalAPI;
 
+import java.util.HashMap;
+
 import org.bukkit.ChatColor;
 
 import de.herrbockwurst.heroleague.Main;
@@ -18,5 +20,8 @@ public class Methods {
 		}
 		
 		return "String not found";
+	}
+	public static void initGame(HashMap<String, Object> game) {
+		game.put("isRunning", false);
 	}
 }
