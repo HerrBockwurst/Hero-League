@@ -23,7 +23,7 @@ public class MySQL {
 		if(!isConnected()) {
 			try {
 				con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db, user, pass);
-				System.out.println(Methods.getPluginName(true) + " " + main.lang.getString("MySQL.conOK"));
+				System.out.println(Methods.getPluginName(true) + " " + "MySQL Verbindung erfolgreich aufgebaut!");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -35,7 +35,7 @@ public class MySQL {
 		if(isConnected()) {
 			try {
 				con.close();
-				System.out.println(Methods.getPluginName(true) + " " + main.lang.getString("MySQL.disconnected"));
+				System.out.println(Methods.getPluginName(true) + " " + "MySQL Verbindung getrennt!");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

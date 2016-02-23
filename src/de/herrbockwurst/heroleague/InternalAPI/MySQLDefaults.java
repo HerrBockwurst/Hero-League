@@ -4,7 +4,7 @@ package de.herrbockwurst.heroleague.InternalAPI;
 public class MySQLDefaults {
 	public static void create() {
 		//Table creation
-		MySQL.query("CREATE TABLE IF NOT EXISTS `globalconfig` (`conf` VARCHAR(100), value TEXT)");
+		MySQL.query("CREATE TABLE IF NOT EXISTS `language` (`key` VARCHAR(100), `string` TEXT)");
 		MySQL.query("CREATE TABLE IF NOT EXISTS `stats_mineleague` (`UUID` VARCHAR(100), `name` VARCHAR(100))");
 		
 		//Inhalt einfügen
