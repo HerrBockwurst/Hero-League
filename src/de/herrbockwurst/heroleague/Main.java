@@ -11,10 +11,20 @@ public class Main extends JavaPlugin {
     public SimpleConfigManager manager;
     public SimpleConfig config;
     public SimpleConfig lang;
-    public SimpleConfig lobbys;
 	
 	@Override
 	public void onEnable() {
 		thisclass = this;
+		
+		getConf();
+	}
+
+	private void getConf() {
+		
+		manager = new SimpleConfigManager(this);
+		config = manager.getNewConfig("conf.yml");
+		
+		FixConfig.fix(this);
+		
 	}
 }
