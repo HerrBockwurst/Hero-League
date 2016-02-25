@@ -15,7 +15,7 @@ public class BlockPlace implements Listener {
 	public void onBlockBreak (BlockPlaceEvent ev ) {
 		ev.setCancelled(true);
 		if(ev.getPlayer() instanceof Player) {
-			ev.getPlayer().sendMessage(Methods.createMessage("cannotDoThat", ChatColor.RED));
+			ev.getPlayer().sendMessage(Methods.createMessage("cannotDoThat", ChatColor.RED, true));
 		}
 	}
 

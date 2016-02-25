@@ -1,8 +1,5 @@
 package de.herrbockwurst.heroleague.InternalAPI;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import org.bukkit.ChatColor;
 
 import de.herrbockwurst.heroleague.Main;
@@ -18,18 +15,22 @@ public class Methods {
 	}
 	
 	
-	public static String createMessage(String string, ChatColor color) {
-		String msg;
-		ResultSet result = MySQL.queryResult("SELECT `string` FROM `language` WHERE `key` = '" + string + "'");
-			
-		try {
-			msg = getPluginName(true) + " " + color + result.getString("string");
-			return msg;
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public static String createMessage(String string, ChatColor color, Boolean WithPrefix) {
+		String msg = null;
+		
+		if(Main.thisclass.lang.containsKey(string)) {
+			if(WithPrefix) {
+				msg = getPluginName(true) + " " + color + Main.thisclass.lang.get(string);
+			} else {
+				msg = color + Main.thisclass.lang.get(string);
+			}
+		} else {
+			System.out.println(getPluginName(true) + " [ERROR] Invalid string \"" + string + "\"");
+			return null;
 		}
-			
-		System.out.println(getPluginName(true) + " [ERROR] Invalid string \"" + string + "\"");
-		return null;
+
+		
+		return msg;
+		
 	}
 }

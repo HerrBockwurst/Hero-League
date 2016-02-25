@@ -15,7 +15,7 @@ public class BlockBreak implements Listener {
 	public void onBlockBreak (BlockBreakEvent ev ) {
 		ev.setCancelled(true);
 		if(ev.getPlayer() instanceof Player) {
-			ev.getPlayer().sendMessage(Methods.createMessage("cannotDoThat", ChatColor.RED));
+			ev.getPlayer().sendMessage(Methods.createMessage("cannotDoThat", ChatColor.RED, true));
 		}
 	}
 
