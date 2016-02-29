@@ -2,7 +2,9 @@ package de.herrbockwurst.heroleague;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +20,8 @@ public class Main extends JavaPlugin {
     public SimpleConfig config;;
     public HashMap<String, Object> game = new HashMap<>();
     public HashMap<String, String> lang = new HashMap<>();
+	public List<String> TeamRot = new ArrayList<String>();
+	public List<String> TeamBlau = new ArrayList<String>();
 	
 	@Override
 	public void onEnable() {
