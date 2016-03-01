@@ -1,5 +1,8 @@
 package de.herrbockwurst.heroleague.Listeners.Player;
 
+import java.util.Random;
+
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -7,26 +10,48 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import de.herrbockwurst.heroleague.Main;
+import de.herrbockwurst.heroleague.InternalAPI.Methods;
 
 public class PlayerJoin implements Listener {
-	
-	private Main main = Main.thisclass;
-	
+		
 	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerJoin(PlayerJoinEvent ev) {
 		
 		Player p = ev.getPlayer(); 
 		
 		//check if game is already running
-		if((Boolean) main.game.get("isRunning")) {
+		if((Boolean) Main.game.get("isRunning")) {
 			//tp to team spawn
 		} else {
-			if(main.TeamBlau.size() < main.TeamRot.size()) {
-				
+			
+			//Spieler Team zuweisen
+			if(Main.TeamBlau.size() < Main.TeamRot.size()) {
+				Main.TeamBlau.add(p.getUniqueId().toString());
 			} else {
-				
+				Main.TeamRot.add(p.getUniqueId().toString());
 			}
+			p.sendMessage(ChatColor.DARK_GREEN + "#####################");
+			p.sendMessage(ChatColor.DARK_GREEN + "#   " + ChatColor.WHITE + "Willkommen in" + ChatColor.DARK_GREEN + "   #");
+			p.sendMessage(ChatColor.DARK_GREEN + "#    " + ChatColor.YELLOW + Methods.getPluginName(false) + ChatColor.DARK_GREEN + "    #");			
+			p.sendMessage(ChatColor.DARK_GREEN + "#     " + ChatColor.WHITE + Main.game.get("GameType") + ChatColor.DARK_GREEN + "      #");
+			p.sendMessage(ChatColor.DARK_GREEN + "#####################");
+			p.sendMessage("");
+			
+			if (Main.TeamBlau.contains(p.getUniqueId().toString())) {
+				p.sendMessage(ChatColor.DARK_GREEN + "Du bist in Team " + ChatColor.BLUE + "Blau" + ChatColor.DARK_GREEN + "!" );
+			} else {
+				p.sendMessage(ChatColor.DARK_GREEN + "Du bist in Team " + ChatColor.RED + "Rot" + ChatColor.DARK_GREEN + "!" );
+			}
+				
+			
+			//Spieler Held zuweisen
+			Random rnd = new Random();
+			rnd.nextInt()
+			
+			//Items Spieler geben
+			
 			//tp to lobby
+			
 		}
 	}
 	

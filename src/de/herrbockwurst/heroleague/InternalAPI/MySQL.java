@@ -10,13 +10,11 @@ import de.herrbockwurst.heroleague.Main;
 
 public class MySQL {
 	
-	private static Main main = Main.thisclass;
-	
-	public static String host = main.config.getString("MySQL.host");
-	public static String port = main.config.getString("MySQL.port");
-	public static String db = main.config.getString("MySQL.database");
-	public static String user = main.config.getString("MySQL.user");
-	public static String pass = main.config.getString("MySQL.pass");
+	public static String host = Main.config.getString("MySQL.host");
+	public static String port = Main.config.getString("MySQL.port");
+	public static String db = Main.config.getString("MySQL.database");
+	public static String user = Main.config.getString("MySQL.user");
+	public static String pass = Main.config.getString("MySQL.pass");
 	public static Connection con;
 	
 	public static void connect() {

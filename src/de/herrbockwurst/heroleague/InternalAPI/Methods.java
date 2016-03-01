@@ -10,27 +10,10 @@ public class Methods {
 		if(form == false) {
 			return Main.thisclass.getDescription().getName();
 		} else {
-			return ChatColor.DARK_GREEN + "[" + Main.thisclass.getDescription().getName() + "]";
+			return ChatColor.DARK_GREEN + "[" + Main.thisclass.getDescription().getName() + "]" + ChatColor.WHITE;
 		}		
 	}
 	
 	
-	public static String createMessage(String string, ChatColor color, Boolean WithPrefix) {
-		String msg = null;
-		
-		if(Main.thisclass.lang.containsKey(string)) {
-			if(WithPrefix) {
-				msg = getPluginName(true) + " " + color + Main.thisclass.lang.get(string);
-			} else {
-				msg = color + Main.thisclass.lang.get(string);
-			}
-		} else {
-			System.out.println(getPluginName(true) + " [ERROR] Invalid string \"" + string + "\"");
-			return null;
-		}
 
-		
-		return msg;
-		
-	}
 }
