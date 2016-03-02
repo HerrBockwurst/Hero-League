@@ -8,8 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
 import de.herrbockwurst.heroleague.Main;
+import de.herrbockwurst.heroleague.Heroes.HeroInterface;
 import de.herrbockwurst.heroleague.InternalAPI.Methods;
 
 public class PlayerJoin implements Listener {
@@ -26,9 +26,9 @@ public class PlayerJoin implements Listener {
 			
 			//Spieler Team zuweisen
 			if(Main.TeamBlau.size() < Main.TeamRot.size()) {
-				Main.TeamBlau.add(p.getUniqueId().toString());
+				Main.TeamBlau.add(p.getUniqueId());
 			} else {
-				Main.TeamRot.add(p.getUniqueId().toString());
+				Main.TeamRot.add(p.getUniqueId());
 			}
 			p.sendMessage(ChatColor.DARK_GREEN + "#####################");
 			p.sendMessage(ChatColor.DARK_GREEN + "#   " + ChatColor.WHITE + "Willkommen in" + ChatColor.DARK_GREEN + "   #");
@@ -37,7 +37,7 @@ public class PlayerJoin implements Listener {
 			p.sendMessage(ChatColor.DARK_GREEN + "#####################");
 			p.sendMessage("");
 			
-			if (Main.TeamBlau.contains(p.getUniqueId().toString())) {
+			if (Main.TeamBlau.contains(p.getUniqueId())) {
 				p.sendMessage(ChatColor.DARK_GREEN + "Du bist in Team " + ChatColor.BLUE + "Blau" + ChatColor.DARK_GREEN + "!" );
 			} else {
 				p.sendMessage(ChatColor.DARK_GREEN + "Du bist in Team " + ChatColor.RED + "Rot" + ChatColor.DARK_GREEN + "!" );
@@ -46,7 +46,7 @@ public class PlayerJoin implements Listener {
 			
 			//Spieler Held zuweisen
 			Random rnd = new Random();
-			int crnd = rnd.nextInt(Main.Heroes.size() -1);
+			int crnd = rnd.nextInt(Main.Heroes.size() -1); 
 			
 			p.sendMessage(ChatColor.DARK_GREEN + "Dein Held ist " + Main.Heroes.get(crnd) + "!");
 			

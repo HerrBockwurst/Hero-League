@@ -3,6 +3,8 @@ package de.herrbockwurst.heroleague;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.herrbockwurst.heroleague.Commands.setCoord;
@@ -17,9 +19,9 @@ public class Main extends JavaPlugin {
     public SimpleConfigManager manager;
     public static SimpleConfig config;;
     public static HashMap<String, Object> game = new HashMap<>();
-	public static List<String> TeamRot = new ArrayList<String>();
-	public static List<String> TeamBlau = new ArrayList<String>();
-	public static HashMap<String, Object> PlayerHeroes = new HashMap<>(); 
+	public static List<UUID> TeamRot = new ArrayList<UUID>();
+	public static List<UUID> TeamBlau = new ArrayList<UUID>();
+	public static HashMap<UUID, String> PlayerHeroes = new HashMap<>(); 
 	public static List<String> Heroes = new ArrayList<String>();
 	
 	@Override
