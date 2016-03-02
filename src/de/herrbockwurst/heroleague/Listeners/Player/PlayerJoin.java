@@ -46,7 +46,9 @@ public class PlayerJoin implements Listener {
 			
 			//Spieler Held zuweisen
 			Random rnd = new Random();
-			rnd.nextInt()
+			int crnd = rnd.nextInt(Main.Heroes.size() -1);
+			
+			p.sendMessage(ChatColor.DARK_GREEN + "Dein Held ist " + Main.Heroes.get(crnd) + "!");
 			
 			//Items Spieler geben
 			

@@ -1,15 +1,14 @@
 package de.herrbockwurst.heroleague;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.herrbockwurst.heroleague.Commands.setCoord;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfig;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfigManager;
+import de.herrbockwurst.heroleague.Listeners.Player.PlayerInteract;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerJoin;
 
 public class Main extends JavaPlugin {
@@ -21,7 +20,7 @@ public class Main extends JavaPlugin {
 	public static List<String> TeamRot = new ArrayList<String>();
 	public static List<String> TeamBlau = new ArrayList<String>();
 	public static HashMap<String, Object> PlayerHeroes = new HashMap<>(); 
-	public static List<Integer> Heroes = new ArrayList<Integer>();
+	public static List<String> Heroes = new ArrayList<String>();
 	
 	@Override
 	public void onEnable() {
@@ -36,7 +35,8 @@ public class Main extends JavaPlugin {
 	}
 
 	private void registerHeroes() {
-		//Hier weiter!
+		Heroes.add("Allan"); 
+		Heroes.add("Mina");
 	}
 
 	private void registerCommands() {
@@ -46,6 +46,7 @@ public class Main extends JavaPlugin {
 
 	private void registerEvents() {
 		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+		getServer().getPluginManager().registerEvents(new PlayerInteract(), this);
 		
 	}
 
