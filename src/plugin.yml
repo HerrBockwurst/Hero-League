@@ -4,7 +4,7 @@ main: de.herrbockwurst.heroleague.Main
 description: Hero League
 author: HerrBockwurst
 commands:
-  hub:
+  setcoord:
     usage: /<command> <lobby/rot/blau>
     description: Setzt Koordinatens
     aliases: [setcd]

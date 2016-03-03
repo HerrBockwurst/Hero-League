@@ -2,14 +2,21 @@ package de.herrbockwurst.heroleague.Listeners.Player;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+
 import de.herrbockwurst.heroleague.Main;
-import de.herrbockwurst.heroleague.Heroes.HeroInterface;
 import de.herrbockwurst.heroleague.InternalAPI.Methods;
 
 public class PlayerJoin implements Listener {
@@ -46,15 +53,51 @@ public class PlayerJoin implements Listener {
 			
 			//Spieler Held zuweisen
 			Random rnd = new Random();
-			int crnd = rnd.nextInt(Main.Heroes.size() -1); 
+			int crnd = rnd.nextInt(Main.HeroList.size() -1); 
 			
-			p.sendMessage(ChatColor.DARK_GREEN + "Dein Held ist " + Main.Heroes.get(crnd) + "!");
-			
+			p.sendMessage(ChatColor.DARK_GREEN + "Dein Held ist " + Main.HeroList.get(crnd) + "!");
+			Main.PlayerHeroes.put(p.getUniqueId(), Main.HeroList.get(crnd));
+
 			//Items Spieler geben
-			
+			gibItems(p);
+
 			//tp to lobby
+			World world = Bukkit.getWorld((String) Main.game.get("lobbyWorld"));
+			double X = Double.valueOf(Main.game.get("lobbyX").toString());
+			double Y = Double.valueOf((String) Main.game.get("lobbyY").toString());
+			double Z = Double.valueOf((String) Main.game.get("lobbyZ").toString());
+			float Pitch = Float.valueOf((String) Main.game.get("lobbyPitch").toString());
+			float Yaw = Float.valueOf((String) Main.game.get("lobbyYaw").toString());
+			
+			Location lobbyloc = new Location(world, X, Y, Z, Yaw, Pitch);
+			
+			p.teleport(lobbyloc);
 			
 		}
+	}
+
+	private void gibItems(Player p) {
+		ItemStack item;
+		SkullMeta skullmeta;
+		ItemMeta meta;
+		//Skull
+		item = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+		skullmeta = (SkullMeta) item.getItemMeta();
+		skullmeta.setOwner(p.getName());
+		skullmeta.setDisplayName("Hero wählen");
+		item.setItemMeta(skullmeta);
+		
+		p.getInventory().setItem(0, item);
+		
+		//Team
+		item = new ItemStack(Material.BANNER, 1);
+		meta = item.getItemMeta();
+		meta.setDisplayName("Team wählen");
+		item.setItemMeta(meta);
+		
+		p.getInventory().setItem(1, item);
+		
+		
 	}
 	
 }

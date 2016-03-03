@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.herrbockwurst.heroleague.Commands.setCoord;
+import de.herrbockwurst.heroleague.Heroes.EHeroes;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfig;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfigManager;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerInteract;
@@ -21,8 +22,9 @@ public class Main extends JavaPlugin {
     public static HashMap<String, Object> game = new HashMap<>();
 	public static List<UUID> TeamRot = new ArrayList<UUID>();
 	public static List<UUID> TeamBlau = new ArrayList<UUID>();
-	public static HashMap<UUID, String> PlayerHeroes = new HashMap<>(); 
-	public static List<String> Heroes = new ArrayList<String>();
+	public static HashMap<UUID, String> PlayerHeroes = new HashMap<>();
+	public static HashMap<Integer, String> HeroList = new HashMap<>();
+	
 	
 	@Override
 	public void onEnable() {
@@ -37,8 +39,10 @@ public class Main extends JavaPlugin {
 	}
 
 	private void registerHeroes() {
-		Heroes.add("Allan"); 
-		Heroes.add("Mina");
+		//Erstellt eine HashMap mit den Helden + der ID
+		for (EHeroes h : EHeroes.values()) {
+			HeroList.put(h.ordinal(), h.toString());
+		}
 	}
 
 	private void registerCommands() {

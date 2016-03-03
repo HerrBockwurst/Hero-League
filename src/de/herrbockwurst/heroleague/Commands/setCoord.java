@@ -32,13 +32,15 @@ public class setCoord implements CommandExecutor{
 			String welcheCoord = "";
 			if(args[0].equalsIgnoreCase("lobby")) {
 				welcheCoord = "Game.Lobby";
+				Main.config.set(welcheCoord + ".World", world);
 			} else if(args[0].equalsIgnoreCase("rot")) {
-				welcheCoord = "InGame.Rot";
+				welcheCoord = "Game.InGame.Rot";
+				Main.config.set("Game.InGame.World", world);
 			} else {
-				welcheCoord = "InGame.Blau";
+				welcheCoord = "Game.InGame.Blau";
+				Main.config.set("Game.InGame.World", world);
 			}
-				
-			Main.config.set(welcheCoord + ".world", world);
+	
 			Main.config.set(welcheCoord + ".X", X);
 			Main.config.set(welcheCoord + ".Y", Y);
 			Main.config.set(welcheCoord + ".Z", Z);
