@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -13,11 +14,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import de.herrbockwurst.heroleague.Main;
 import de.herrbockwurst.heroleague.InternalAPI.Methods;
+import de.herrbockwurst.heroleague.Shedulars.GameStartCountdown;
 
 public class PlayerJoin implements Listener {
 		
@@ -27,10 +29,10 @@ public class PlayerJoin implements Listener {
 		Player p = ev.getPlayer(); 
 		
 		//check if game is already running
-		if((Boolean) Main.game.get("isRunning")) {
+		if(Boolean.valueOf(Main.game.get("isRunning").toString())) {
 			//tp to team spawn
 		} else {
-			
+			//if(GameStartCountdown.start())
 			//Spieler Team zuweisen
 			if(Main.TeamBlau.size() < Main.TeamRot.size()) {
 				Main.TeamBlau.add(p.getUniqueId());
@@ -79,7 +81,8 @@ public class PlayerJoin implements Listener {
 	private void gibItems(Player p) {
 		ItemStack item;
 		SkullMeta skullmeta;
-		ItemMeta meta;
+		BannerMeta bannermeta;
+		
 		//Skull
 		item = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
 		skullmeta = (SkullMeta) item.getItemMeta();
@@ -91,9 +94,14 @@ public class PlayerJoin implements Listener {
 		
 		//Team
 		item = new ItemStack(Material.BANNER, 1);
-		meta = item.getItemMeta();
-		meta.setDisplayName("Team wählen");
-		item.setItemMeta(meta);
+		bannermeta = (BannerMeta) item.getItemMeta();
+		bannermeta.setDisplayName("Team wählen");
+		
+		if (Main.TeamBlau.contains(p.getUniqueId()))
+			bannermeta.setBaseColor(DyeColor.BLUE);
+		else
+			bannermeta.setBaseColor(DyeColor.RED);
+		item.setItemMeta(bannermeta);
 		
 		p.getInventory().setItem(1, item);
 		

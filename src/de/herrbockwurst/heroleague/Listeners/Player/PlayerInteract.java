@@ -1,6 +1,7 @@
 package de.herrbockwurst.heroleague.Listeners.Player;
 
 import org.bukkit.Bukkit;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import de.herrbockwurst.heroleague.Main;
+import de.herrbockwurst.heroleague.Heroes.EHeroes;
 import de.herrbockwurst.heroleague.InternalAPI.Methods;
 
 public class PlayerInteract implements Listener {
@@ -32,15 +34,22 @@ public class PlayerInteract implements Listener {
 
 	private void TeamSelector(Player p) {
 		Inventory TeamSelect = Bukkit.createInventory(null, 9, "Wähle dein Team!");
-		String TeamRotLore = "[" + Main.TeamRot.size() + "/5]";
-		String TeamBlauLore = "[" + Main.TeamBlau.size() + "/5]";
-		Methods.InvAddItem(Material.BANNER, TeamSelect, 3, "Team Rot", TeamRotLore);
-		Methods.InvAddItem(Material.BANNER, TeamSelect, 5, "Team Blau", TeamBlauLore);
+		String[] TeamRotLore = {"[" + Main.TeamRot.size() + "/5]"};
+		String[] TeamBlauLore = {"[" + Main.TeamBlau.size() + "/5]"};
+		Methods.InvAddBanner(TeamSelect, 3, "Team Rot", TeamRotLore, DyeColor.RED);
+		Methods.InvAddBanner(TeamSelect, 5, "Team Blau", TeamBlauLore, DyeColor.BLUE);
 		p.openInventory(TeamSelect);
 	}
 
 	private void HeroSelector(Player p) {
-		// TODO Auto-generated method stub
+		Inventory HeroSelect = Bukkit.createInventory(null, 54, "Wähle deinen Held");
+		int i = 0;
+		String[] lore = {""};
+		for(EHeroes h : EHeroes.values()) {
+			Methods.InvAddSkull(HeroSelect, i, h.toString(), lore, "");
+			i++;
+		}
+		
 		
 	}
 

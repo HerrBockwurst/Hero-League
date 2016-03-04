@@ -1,7 +1,7 @@
-name: Hero League
+name: HeroLeague
 version: 1.0.0
 main: de.herrbockwurst.heroleague.Main
-description: Hero League
+description: HeroLeague
 author: HerrBockwurst
 commands:
   setcoord:
