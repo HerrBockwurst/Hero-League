@@ -46,6 +46,7 @@ public class PlayerInteract implements Listener {
 		int i = 0;
 		String[] lore = {""};
 		for(EHeroes h : EHeroes.values()) {
+			
 			Methods.InvAddSkull(HeroSelect, i, h.toString(), lore, "");
 			i++;
 		}

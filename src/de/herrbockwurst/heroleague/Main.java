@@ -13,7 +13,9 @@ import de.herrbockwurst.heroleague.InternalAPI.SimpleConfig;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfigManager;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerInteract;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerJoin;
+import de.herrbockwurst.heroleague.Listeners.Player.PlayerLeave;
 
+@SuppressWarnings("unused")
 public class Main extends JavaPlugin {
 
 	public static Main thisclass = null;
@@ -24,6 +26,7 @@ public class Main extends JavaPlugin {
 	public static List<UUID> TeamBlau = new ArrayList<UUID>();
 	public static HashMap<UUID, String> PlayerHeroes = new HashMap<>();
 	public static HashMap<Integer, String> HeroList = new HashMap<>();
+	public static HashMap<UUID, Integer> PlayerDeath = new HashMap<>();
 	
 	
 	@Override
@@ -51,7 +54,9 @@ public class Main extends JavaPlugin {
 	}
 
 	private void registerEvents() {
-		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+		//Join und Leave events zum Test deaktiviert
+		//getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+		//().getPluginManager().registerEvents(new PlayerLeave(), this);
 		getServer().getPluginManager().registerEvents(new PlayerInteract(), this);
 		
 	}

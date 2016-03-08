@@ -8,71 +8,60 @@ import org.bukkit.Note;
 import org.bukkit.Note.Tone;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.herrbockwurst.heroleague.Main;
-import de.herrbockwurst.heroleague.InternalAPI.Methods;
+import de.herrbockwurst.heroleague.Listeners.Player.PlayerJoin;
 
-public class GameStartCountdown extends Main {
-	/*	
-	private BukkitTask shedular;
+@SuppressWarnings("unused")
+public class GameStartCountdown {
 	
-	private void shedular(BukkitTask shedular) {
-		shedular = Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
-			int waiting = 120; //Startzeit in Sekunden
-			
-			@Override
-			public void run() {
-				if(waiting > 0) {
-					for(Player p : Bukkit.getOnlinePlayers()) {
-						p.setLevel(waiting);
-						if(waiting == 30) {
-							p.sendMessage("Noch " + waiting + " Sekunden bis zum Start!");
-							p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(3, Tone.D));
-						} else if (waiting <= 10) {
-							p.sendMessage("Noch " + waiting + " Sekunden bis zum Start!");
-							p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(3, Tone.D));
-							StartGame();
-						}
-					}
-					waiting--;
-				} else {
-					//Stop Shedular
-				}
-				
-			}
-			
-		}, 0, 20);
-	}
+	Main mainplugin = Main.thisclass;
 	
-
-		new BukkitRunnable() {
-
-			public void run() {
-				if(waiting > 0) {
-					for(Player p : Bukkit.getOnlinePlayers()) {
-						p.setLevel(waiting);
-						if(waiting == 30) {
-							p.sendMessage("Noch " + waiting + " Sekunden bis zum Start!");
-							p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(3, Tone.D));
-						} else if (waiting <= 10) {
-							p.sendMessage("Noch " + waiting + " Sekunden bis zum Start!");
-							p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(3, Tone.D));
-							StartGame();
-						}
-					}
-					waiting--;
-				} else {
-					this.cancel();
-				}
-			}
-			
-		}.runTaskTimerAsynchronously(this, 0, 20);
-		*/
+	static BukkitTask counter = null;
+	static int waiting = 120;
+	  
+    public GameStartCountdown() {
+    	
+    	      
+        counter = new BukkitRunnable() {
+            
+            @Override
+            public void run() {
+                if(waiting > 0) {
+                    for(Player p : Bukkit.getOnlinePlayers()) {
+                        p.setLevel(waiting);
+                        if(waiting == 30) {
+                            p.sendMessage("Noch " + waiting + " Sekunden bis zum Start!");
+                            p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Tone.D));
+                        } else if (waiting <= 10) {
+                            p.sendMessage("Noch " + waiting + " Sekunden bis zum Start!");
+                            p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Tone.D));                            
+                        }
+                    }
+                    waiting--;
+                } else {
+                	for (Player p : Bukkit.getOnlinePlayers()) p.setLevel(0);
+                	StartGame();
+                }
+              
+            }
+        }.runTaskTimerAsynchronously(mainplugin, 0, 20);
+    }
+    
+    public static void stop() {
+    	counter.cancel();
+    	counter = null;
+    	PlayerJoin.cd = null;
+    	waiting = 13;
+    }
 	
 	public static void StartGame() {
-		Main.game.replace("isRunning", true);
-
+		//Main.game.replace("isRunning", true);
+    	stop();
+		Bukkit.broadcastMessage("Starte Spiel!");
+/*
 		//Teleporte alle ins Spiel
 		World world = Bukkit.getWorld((String) Main.game.get("Game.Ingame.World"));
 		double RotX = Double.valueOf(Main.game.get("Game.Ingame.Rot.X").toString()); 
@@ -99,6 +88,8 @@ public class GameStartCountdown extends Main {
 			p.sendMessage(Methods.getPluginName(true) + ChatColor.GREEN + " Das Spiel beginnt!");
 		}
 		//Starte Spiel Shedular
+		 *
+		 */
 	}
 	
 }

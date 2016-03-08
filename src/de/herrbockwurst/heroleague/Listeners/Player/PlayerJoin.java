@@ -22,7 +22,9 @@ import de.herrbockwurst.heroleague.InternalAPI.Methods;
 import de.herrbockwurst.heroleague.Shedulars.GameStartCountdown;
 
 public class PlayerJoin implements Listener {
-		
+	
+	public static GameStartCountdown cd = null;
+	
 	@EventHandler(priority=EventPriority.HIGH)
 	public void onPlayerJoin(PlayerJoinEvent ev) {
 		
@@ -32,7 +34,9 @@ public class PlayerJoin implements Listener {
 		if(Boolean.valueOf(Main.game.get("isRunning").toString())) {
 			//tp to team spawn
 		} else {
-			//if(GameStartCountdown.start())
+			if(cd == null) {
+				cd = new GameStartCountdown();
+			}
 			//Spieler Team zuweisen
 			if(Main.TeamBlau.size() < Main.TeamRot.size()) {
 				Main.TeamBlau.add(p.getUniqueId());
@@ -56,7 +60,11 @@ public class PlayerJoin implements Listener {
 			//Spieler Held zuweisen
 			Random rnd = new Random();
 			int crnd = rnd.nextInt(Main.HeroList.size() -1); 
-			
+			while(Main.PlayerHeroes.containsValue(Main.HeroList.get(crnd).toString())) {
+				if(crnd <= (Main.HeroList.size() -1)) crnd++;
+				else crnd = rnd.nextInt(Main.HeroList.size() -1);
+				//Wenn Held schon vergeben, dann entweder nächster Held aus Liste oder Zufälliger Held
+			}				
 			p.sendMessage(ChatColor.DARK_GREEN + "Dein Held ist " + Main.HeroList.get(crnd) + "!");
 			Main.PlayerHeroes.put(p.getUniqueId(), Main.HeroList.get(crnd));
 
@@ -64,12 +72,12 @@ public class PlayerJoin implements Listener {
 			gibItems(p);
 
 			//tp to lobby
-			World world = Bukkit.getWorld((String) Main.game.get("lobbyWorld"));
+			World world = Bukkit.getWorld(Main.game.get("lobbyWorld").toString());
 			double X = Double.valueOf(Main.game.get("lobbyX").toString());
-			double Y = Double.valueOf((String) Main.game.get("lobbyY").toString());
-			double Z = Double.valueOf((String) Main.game.get("lobbyZ").toString());
-			float Pitch = Float.valueOf((String) Main.game.get("lobbyPitch").toString());
-			float Yaw = Float.valueOf((String) Main.game.get("lobbyYaw").toString());
+			double Y = Double.valueOf(Main.game.get("lobbyY").toString());
+			double Z = Double.valueOf(Main.game.get("lobbyZ").toString());
+			float Pitch = Float.valueOf(Main.game.get("lobbyPitch").toString());
+			float Yaw = Float.valueOf(Main.game.get("lobbyYaw").toString());
 			
 			Location lobbyloc = new Location(world, X, Y, Z, Yaw, Pitch);
 			
@@ -77,7 +85,7 @@ public class PlayerJoin implements Listener {
 			
 		}
 	}
-
+	
 	private void gibItems(Player p) {
 		ItemStack item;
 		SkullMeta skullmeta;
