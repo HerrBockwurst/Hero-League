@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.herrbockwurst.heroleague.Commands.setCoord;
 import de.herrbockwurst.heroleague.Heroes.EHeroes;
+import de.herrbockwurst.heroleague.Heroes.IHeroes;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfig;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfigManager;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerInteract;
@@ -37,6 +38,7 @@ public class Main extends JavaPlugin {
 		initGame();
 		registerEvents();
 		registerCommands();
+		
 		registerHeroes();
 		
 	}
@@ -54,9 +56,9 @@ public class Main extends JavaPlugin {
 	}
 
 	private void registerEvents() {
-		//Join und Leave events zum Test deaktiviert
-		//getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
-		//().getPluginManager().registerEvents(new PlayerLeave(), this);
+		
+		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+		//getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
 		getServer().getPluginManager().registerEvents(new PlayerInteract(), this);
 		
 	}

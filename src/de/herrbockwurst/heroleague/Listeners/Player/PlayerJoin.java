@@ -35,7 +35,7 @@ public class PlayerJoin implements Listener {
 			//tp to team spawn
 		} else {
 			if(cd == null) {
-				cd = new GameStartCountdown();
+				//cd = new GameStartCountdown();
 			}
 			//Spieler Team zuweisen
 			if(Main.TeamBlau.size() < Main.TeamRot.size()) {

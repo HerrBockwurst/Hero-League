@@ -12,9 +12,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import de.herrbockwurst.heroleague.Main;
+import de.herrbockwurst.heroleague.InternalAPI.Methods;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerJoin;
 
-@SuppressWarnings("unused")
 public class GameStartCountdown {
 	
 	Main mainplugin = Main.thisclass;
@@ -61,9 +61,9 @@ public class GameStartCountdown {
 		//Main.game.replace("isRunning", true);
     	stop();
 		Bukkit.broadcastMessage("Starte Spiel!");
-/*
+
 		//Teleporte alle ins Spiel
-		World world = Bukkit.getWorld((String) Main.game.get("Game.Ingame.World"));
+		World world = Bukkit.getWorld(Main.game.get("Game.Ingame.World").toString());
 		double RotX = Double.valueOf(Main.game.get("Game.Ingame.Rot.X").toString()); 
 		double RotY = Double.valueOf(Main.game.get("Game.Ingame.Rot.Y").toString());
 		double RotZ = Double.valueOf(Main.game.get("Game.Ingame.Rot.Z").toString());
@@ -88,8 +88,6 @@ public class GameStartCountdown {
 			p.sendMessage(Methods.getPluginName(true) + ChatColor.GREEN + " Das Spiel beginnt!");
 		}
 		//Starte Spiel Shedular
-		 *
-		 */
 	}
 	
 }

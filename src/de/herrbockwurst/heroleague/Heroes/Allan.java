@@ -25,6 +25,17 @@ public class Allan extends AHero {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public String getSkinID() {
+		
+		return "HerrBockwurst";
+	}
+
+	@Override
+	public String getName() {
+		return "Allan";
+	}
 	
 
 }

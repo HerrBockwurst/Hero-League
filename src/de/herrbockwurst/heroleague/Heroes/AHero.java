@@ -1,6 +1,6 @@
 package de.herrbockwurst.heroleague.Heroes;
 
-public abstract class AHero implements IHeros {
+public abstract class AHero implements IHeroes {
 
 	@Override
 	public void ItemBackport() {
