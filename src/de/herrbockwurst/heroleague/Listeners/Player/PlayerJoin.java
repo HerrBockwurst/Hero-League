@@ -18,6 +18,8 @@ import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import de.herrbockwurst.heroleague.Main;
+import de.herrbockwurst.heroleague.Heroes.EHeroes;
+import de.herrbockwurst.heroleague.Heroes.HeroHandler;
 import de.herrbockwurst.heroleague.InternalAPI.Methods;
 import de.herrbockwurst.heroleague.Shedulars.GameStartCountdown;
 
@@ -38,6 +40,9 @@ public class PlayerJoin implements Listener {
 				//cd = new GameStartCountdown();
 			}
 			//Spieler Team zuweisen
+			if(Main.TeamRot.contains(p.getUniqueId())) Main.TeamRot.remove(p.getUniqueId());
+			if(Main.TeamBlau.contains(p.getUniqueId())) Main.TeamBlau.remove(p.getUniqueId());
+			if(Main.PlayerHeroes.containsKey(p.getUniqueId())) Main.PlayerHeroes.remove(p.getUniqueId());
 			if(Main.TeamBlau.size() < Main.TeamRot.size()) {
 				Main.TeamBlau.add(p.getUniqueId());
 			} else {
@@ -58,15 +63,14 @@ public class PlayerJoin implements Listener {
 				
 			
 			//Spieler Held zuweisen
+			HeroHandler hh = new HeroHandler();
 			Random rnd = new Random();
-			int crnd = rnd.nextInt(Main.HeroList.size() -1); 
-			while(Main.PlayerHeroes.containsValue(Main.HeroList.get(crnd).toString())) {
-				if(crnd <= (Main.HeroList.size() -1)) crnd++;
-				else crnd = rnd.nextInt(Main.HeroList.size() -1);
-				//Wenn Held schon vergeben, dann entweder nächster Held aus Liste oder Zufälliger Held
+			int crnd = rnd.nextInt(EHeroes.values().length);
+			while(Main.PlayerHeroes.containsValue(hh.getHeroName(crnd))) {
+				crnd = rnd.nextInt(EHeroes.values().length);
 			}				
-			p.sendMessage(ChatColor.DARK_GREEN + "Dein Held ist " + Main.HeroList.get(crnd) + "!");
-			Main.PlayerHeroes.put(p.getUniqueId(), Main.HeroList.get(crnd));
+			p.sendMessage(ChatColor.DARK_GREEN + "Dein Held ist " + hh.getHeroName(crnd) + "!");
+			Main.PlayerHeroes.put(p.getUniqueId(), hh.getHeroName(crnd));
 
 			//Items Spieler geben
 			gibItems(p);

@@ -14,6 +14,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import de.herrbockwurst.heroleague.Main;
 import de.herrbockwurst.heroleague.Heroes.EHeroes;
+import de.herrbockwurst.heroleague.Heroes.HeroHandler;
 import de.herrbockwurst.heroleague.InternalAPI.Methods;
 
 public class PlayerInteract implements Listener {
@@ -43,12 +44,13 @@ public class PlayerInteract implements Listener {
 
 	private void HeroSelector(Player p) {
 		Inventory HeroSelect = Bukkit.createInventory(null, 54, "Wähle deinen Held");
-		int i = 0;
-		String[] lore = {""};
+		HeroHandler hh = new HeroHandler();
 		for(EHeroes h : EHeroes.values()) {
-			
-			Methods.InvAddSkull(HeroSelect, i, h.toString(), lore, h.toString());
-			i++;
+			ItemStack cskull = Methods.getSkull(hh.getSkinID(h.ordinal()));
+			cskull = Methods.InvAddSkullName(cskull, hh.getHeroName(h.ordinal()));
+			cskull = Methods.InvAddSkullName(cskull, hh.getHeroName(h.ordinal()));
+			cskull = Methods.AddSkullLore(cskull, hh.getLore(h.ordinal()));
+			HeroSelect.setItem(h.ordinal(), cskull);
 		}
 		p.openInventory(HeroSelect);
 		

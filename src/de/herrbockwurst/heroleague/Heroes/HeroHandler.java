@@ -1,10 +1,9 @@
 package de.herrbockwurst.heroleague.Heroes;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.entity.Player;
-
-import de.herrbockwurst.heroleague.Main;
 
 public class HeroHandler {
 	
@@ -21,19 +20,25 @@ public class HeroHandler {
 		}
 	}
 	
-	public String getSkinID(Player p) {
-		for(IHeroes hero : HeroHandler) {
-			if(Main.PlayerHeroes.get(p.getUniqueId()).equalsIgnoreCase(hero.getName()))
-				return hero.getSkinID();
+	public String getSkinID(Integer i) {
+		if(HeroHandler.get(i).getSkinFile() != null) {
+			return HeroHandler.get(i).getSkinFile();
 		}
 		return null;
 	}
 	
-	public String getSkinID(String s) {
-		for(IHeroes hero : HeroHandler) {
-			if(hero.getName().equalsIgnoreCase(s)) 
-				return hero.getSkinID();			
+	public String getHeroName(Integer i) {
+		if(HeroHandler.get(i).getSkinFile() != null) {
+			return HeroHandler.get(i).getName();
 		}
 		return null;
 	}
+	
+	public List<String> getLore(Integer i) {
+		if(HeroHandler.get(i).getLore() != null) {
+			return HeroHandler.get(i).getLore();
+		}
+		return null;
+	}
+	
 }

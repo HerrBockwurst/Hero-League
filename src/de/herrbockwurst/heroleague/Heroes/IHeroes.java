@@ -1,5 +1,7 @@
 package de.herrbockwurst.heroleague.Heroes;
 
+import java.util.List;
+
 public interface IHeroes {
 	void ItemBackport ();
 	void ItemSkill1();
@@ -7,7 +9,7 @@ public interface IHeroes {
 	void ItemSkill3();
 	void ItemSkill4();
 	void ItemUse();
-	String getSkinID();
+	List<String> getLore();
 	String getName();
-
+	String getSkinFile();
 }

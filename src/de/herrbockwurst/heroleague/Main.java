@@ -12,6 +12,7 @@ import de.herrbockwurst.heroleague.Heroes.EHeroes;
 import de.herrbockwurst.heroleague.Heroes.IHeroes;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfig;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfigManager;
+import de.herrbockwurst.heroleague.Listeners.Player.InventoryMenus;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerInteract;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerJoin;
 import de.herrbockwurst.heroleague.Listeners.Player.PlayerLeave;
@@ -26,7 +27,6 @@ public class Main extends JavaPlugin {
 	public static List<UUID> TeamRot = new ArrayList<UUID>();
 	public static List<UUID> TeamBlau = new ArrayList<UUID>();
 	public static HashMap<UUID, String> PlayerHeroes = new HashMap<>();
-	public static HashMap<Integer, String> HeroList = new HashMap<>();
 	public static HashMap<UUID, Integer> PlayerDeath = new HashMap<>();
 	
 	
@@ -39,16 +39,9 @@ public class Main extends JavaPlugin {
 		registerEvents();
 		registerCommands();
 		
-		registerHeroes();
+	}
 		
-	}
-
-	private void registerHeroes() {
-		//Erstellt eine HashMap mit den Helden + der ID
-		for (EHeroes h : EHeroes.values()) {
-			HeroList.put(h.ordinal(), h.toString());
-		}
-	}
+	
 
 	private void registerCommands() {
 		getCommand("setcoord").setExecutor(new setCoord());
@@ -58,8 +51,9 @@ public class Main extends JavaPlugin {
 	private void registerEvents() {
 		
 		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
-		//getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
+		getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
 		getServer().getPluginManager().registerEvents(new PlayerInteract(), this);
+		getServer().getPluginManager().registerEvents(new InventoryMenus(), this);
 		
 	}
 
@@ -75,7 +69,7 @@ public class Main extends JavaPlugin {
 	private static void initGame() {
 		game.put("isRunning", false);
 		if(config.getBoolean("Ranked")) {
-			game.put("GameType", " Ranked ");
+			game.put("GameType", "Ranked");
 		} else {
 			game.put("GameType", "Unranked");
 		}
