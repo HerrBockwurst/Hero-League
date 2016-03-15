@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDamageEvent;
 
 import de.herrbockwurst.heroleague.InternalAPI.Methods;
 
@@ -13,6 +14,14 @@ public class BlockBreak implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onBlockBreak (BlockBreakEvent ev ) {
+		ev.setCancelled(true);
+		if(ev.getPlayer() instanceof Player) {
+			ev.getPlayer().sendMessage(Methods.getPluginName(true) + ChatColor.RED + " Du kannst das nicht tun!");
+		}
+	}
+	
+	@EventHandler(priority=EventPriority.HIGHEST)
+	public void onBlockHit(BlockDamageEvent ev) {
 		ev.setCancelled(true);
 		if(ev.getPlayer() instanceof Player) {
 			ev.getPlayer().sendMessage(Methods.getPluginName(true) + ChatColor.RED + " Du kannst das nicht tun!");

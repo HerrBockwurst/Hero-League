@@ -1,9 +1,5 @@
 package de.herrbockwurst.heroleague.Listeners.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,22 +11,68 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class Grass implements Listener {
 	
-	public List<UUID> inGrass = new ArrayList<>();
-	
 	@EventHandler(priority=EventPriority.HIGH)
-	public void IsInGrass(PlayerMoveEvent ev) {
+	public void GrassMovement(PlayerMoveEvent ev) {
 		Player p = ev.getPlayer();
-		Location loc = ev.getTo();
-		if(loc.getBlock().getType() == Material.LONG_GRASS) {
+		Material matTo = ev.getTo().getBlock().getType();
+		Material matFrom =ev.getFrom().getBlock().getType();
+		
+		//check ob pos anders
+		double fromX = ev.getFrom().getX();
+		double fromY = ev.getFrom().getY();
+		double fromZ = ev.getFrom().getZ();
+		double toX = ev.getTo().getX();
+		double toY = ev.getTo().getY();
+		double toZ = ev.getTo().getZ();
+		if(fromX == toX && fromY == toY && fromZ == toZ) return;
+		
+		//geht ins grass
+		if(matFrom != Material.DOUBLE_PLANT && matTo == Material.DOUBLE_PLANT) {
 			for(Player oplayer : Bukkit.getOnlinePlayers()) {
-				if(inGrass.contains(oplayer.getUniqueId())) {
-					if(oplayer.getLocation().distance(loc) <= 10) {
-						return;
-					}
+				if(!(dontHideCheck(p, oplayer))) {
+					oplayer.hidePlayer(p);
 				}
-				oplayer.hidePlayer(p);
-				inGrass.add(p.getUniqueId());
+			}
+		}
+		
+		//geht aus Grass
+		if(matFrom == Material.DOUBLE_PLANT && matTo != Material.DOUBLE_PLANT) {
+			for(Player oplayer : Bukkit.getOnlinePlayers()) {
+				//TODO hier check ob Spieler durch skill unsichtbar 
+				oplayer.showPlayer(p);
+				
+				//Andere spieler im grass verbergen
+				if(oplayer.getLocation().getBlock().getType() == Material.DOUBLE_PLANT) p.hidePlayer(oplayer);			
+				
+			}
+		}
+		
+		//bewegt sich im Grass
+		if(matFrom == Material.DOUBLE_PLANT && matTo == Material.DOUBLE_PLANT) {
+			for (Player oplayer : Bukkit.getOnlinePlayers()) {
+				if(!(dontHideCheck(p, oplayer))) {
+					oplayer.hidePlayer(p);
+					if(oplayer.getLocation().getBlock().getType() == Material.DOUBLE_PLANT) p.hidePlayer(oplayer);
+				} else {
+					oplayer.showPlayer(p);
+					if(oplayer.getLocation().getBlock().getType() == Material.DOUBLE_PLANT) p.showPlayer(oplayer);
+				}
 			}
 		}
 	}
+	
+	private boolean dontHideCheck(Player p, Player o) {
+		Location ploc = p.getLocation();
+		Location oloc = o.getLocation();
+		if(p.getEntityId() == o.getEntityId()) return true;
+		if(ploc.getBlock().getType() == Material.DOUBLE_PLANT && oloc.getBlock().getType() == Material.DOUBLE_PLANT) {
+			//Beide sind im Grass
+			if(ploc.distance(oloc) <= 10) {
+				//Beide sind näher als 10 Blöcke, nicht hide
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

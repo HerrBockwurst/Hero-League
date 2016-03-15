@@ -12,10 +12,7 @@ import de.herrbockwurst.heroleague.Heroes.EHeroes;
 import de.herrbockwurst.heroleague.Heroes.IHeroes;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfig;
 import de.herrbockwurst.heroleague.InternalAPI.SimpleConfigManager;
-import de.herrbockwurst.heroleague.Listeners.Player.InventoryMenus;
-import de.herrbockwurst.heroleague.Listeners.Player.PlayerInteract;
-import de.herrbockwurst.heroleague.Listeners.Player.PlayerJoin;
-import de.herrbockwurst.heroleague.Listeners.Player.PlayerLeave;
+import de.herrbockwurst.heroleague.Listeners.Player.*;
 
 @SuppressWarnings("unused")
 public class Main extends JavaPlugin {
@@ -53,8 +50,9 @@ public class Main extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
 		getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
 		getServer().getPluginManager().registerEvents(new PlayerInteract(), this);
+		getServer().getPluginManager().registerEvents(new PlayerDamage(), this);
 		getServer().getPluginManager().registerEvents(new InventoryMenus(), this);
-		
+		getServer().getPluginManager().registerEvents(new Grass(), this);
 	}
 
 	private void getConf() {
