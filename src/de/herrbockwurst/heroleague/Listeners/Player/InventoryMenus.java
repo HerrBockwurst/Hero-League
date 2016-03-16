@@ -1,9 +1,12 @@
 package de.herrbockwurst.heroleague.Listeners.Player;
 
+import java.util.Iterator;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,10 +15,17 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 
 import de.herrbockwurst.heroleague.Main;
+import de.herrbockwurst.heroleague.Heroes.HeroHandler;
 
 public class InventoryMenus implements Listener {
+	
+	Main plugin = Main.thisclass;
 	
 	@EventHandler(priority=EventPriority.HIGH)
 	public void clickEvent (InventoryClickEvent ev) {
@@ -111,6 +121,60 @@ public class InventoryMenus implements Listener {
 		Main.PlayerHeroes.replace(p.getUniqueId(), meta.getDisplayName());
 		p.sendMessage(ChatColor.GREEN + "Du spielst nun als " + meta.getDisplayName() + "!");
 		
+		//apply skin
+		CraftPlayer cp = (CraftPlayer) p;
+		GameProfile gp = cp.getProfile();
+		HeroHandler hh = new HeroHandler();
+		
+		//check wich hero was chosen
+		int x = -1;
+		for(int i = 0; i < hh.getSize(); i++) {
+			if(meta.getDisplayName().equalsIgnoreCase(hh.getHeroName(i))) x = i;
+			p.sendMessage(meta.getDisplayName() + " >>> " + hh.getHeroName(i));
+		}
+		if (x == -1) {
+			p.sendMessage(ChatColor.RED + "Es ist ein Fehler aufgetreten!");
+			return;
+		}
+		
+		//gp.getProperties().clear();
+		String texture = hh.getSkinID(x);
+		
+		Iterator<Property> b = gp.getProperties().get("textures").iterator();
+		String text = null;
+		while(b.hasNext()) {
+			Property c = b.next();
+			if(c.getName().equalsIgnoreCase("textures")) {
+				text = Base64Coder.decodeString(c.getValue());
+				//System.out.println(text);
+				text.replaceAll("/\"SKIN\"[.*?]\"}}}/", "\"SKIN\":{\"url\":\""+texture+"\"}}}");
+				Base64Coder.encodeString(text);
+				//System.out.println(text);
+			}
+		}
+		gp.getProperties().put("textures", new Property("textures", text));
+		
+		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+			
+			@Override
+			public void run() {
+				for(Player o : Bukkit.getOnlinePlayers()) {
+					o.hidePlayer(p);
+				}
+				
+			}
+		}, 0);
+		
+		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+			
+			@Override
+			public void run() {
+				for(Player o : Bukkit.getOnlinePlayers()) {
+					o.showPlayer(p);
+				}
+				
+			}
+		}, 15);
 	}
 	
 }

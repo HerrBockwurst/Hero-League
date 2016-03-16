@@ -48,7 +48,6 @@ public class PlayerInteract implements Listener {
 		for(EHeroes h : EHeroes.values()) {
 			ItemStack cskull = Methods.getSkull(hh.getSkinID(h.ordinal()));
 			cskull = Methods.InvAddSkullName(cskull, hh.getHeroName(h.ordinal()));
-			cskull = Methods.InvAddSkullName(cskull, hh.getHeroName(h.ordinal()));
 			cskull = Methods.AddSkullLore(cskull, hh.getLore(h.ordinal()));
 			HeroSelect.setItem(h.ordinal(), cskull);
 		}

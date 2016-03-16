@@ -41,4 +41,7 @@ public class HeroHandler {
 		return null;
 	}
 	
+	public Integer getSize() {
+		return HeroHandler.size();
+	}
 }
