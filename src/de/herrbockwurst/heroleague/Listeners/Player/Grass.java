@@ -9,6 +9,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import de.herrbockwurst.heroleague.Main;
+
 public class Grass implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGH)
@@ -65,6 +67,8 @@ public class Grass implements Listener {
 		Location ploc = p.getLocation();
 		Location oloc = o.getLocation();
 		if(p.getEntityId() == o.getEntityId()) return true;
+		if(Main.TeamBlau.contains(p.getUniqueId()) && Main.TeamBlau.contains(o.getUniqueId())) return true;
+		if(Main.TeamRot.contains(p.getUniqueId()) && Main.TeamRot.contains(o.getUniqueId())) return true;
 		if(ploc.getBlock().getType() == Material.DOUBLE_PLANT && oloc.getBlock().getType() == Material.DOUBLE_PLANT) {
 			//Beide sind im Grass
 			if(ploc.distance(oloc) <= 10) {

@@ -85,9 +85,10 @@ public class GameStartCountdown {
 			} else {
 				p.teleport(TeamBlau);
 			}
-			p.sendMessage(Methods.getPluginName(true) + ChatColor.GREEN + " Das Spiel beginnt!");
+			p.sendMessage(Methods.getPluginName(true) + ChatColor.GREEN + " Das Spiel beginnt in 10 Sekunden!");
 		}
 		//Starte Spiel Shedular
+		GamestartCooldown.StartDelay();
 	}
 	
 }
